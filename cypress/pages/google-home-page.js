@@ -4,8 +4,7 @@ class GoogleHomePage{
         searchBar: () => cy.get('textarea[title="Search"]'),
         searchForm: () => cy.get('form'),
     }
-    
-    
+
     navigate(){
         cy.visit('/')
     }

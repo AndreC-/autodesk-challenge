@@ -1,7 +1,7 @@
 import GoogleCalculatorPage from "../pages/google-calculator-page";
 import GoogleHomePage from "../pages/google-home-page";
 
-describe('Testing Google Calculator functionalities', () => {
+describe('Google Calculator', () => {
 
   beforeEach(() => {
     const googlePage = new GoogleHomePage();
@@ -11,130 +11,130 @@ describe('Testing Google Calculator functionalities', () => {
     cy.url().should('include', '/search?q=calculator');
   })
 
-  it('Test addition', () =>{
+  it('Test addition of numbers', () =>{
     const googleCalculatorPage = new GoogleCalculatorPage();
-    googleCalculatorPage.clickNumberOneButton();
-    googleCalculatorPage.clickNumberTwoButton();
+    googleCalculatorPage.clickNumberButton(1);
+    googleCalculatorPage.clickNumberButton(2);
     googleCalculatorPage.clickPlusButton();
-    googleCalculatorPage.clickNumberThreeButton();
-    googleCalculatorPage.clickNumberFourButton();
+    googleCalculatorPage.clickNumberButton(3);
+    googleCalculatorPage.clickNumberButton(4);
     googleCalculatorPage.clickEqualsButton();
-    googleCalculatorPage.verifyCalculatorResult('46');
+    googleCalculatorPage.elements.calculatorResult().should('have.text', '46');
   })
 
-  it('Test subtraction', () => {
+  it('Test subtracting numbers', () => {
     const googleCalculatorPage = new GoogleCalculatorPage();
-    googleCalculatorPage.clickNumberFiveButton();
-    googleCalculatorPage.clickNumberSixButton();
+    googleCalculatorPage.clickNumberButton(5);
+    googleCalculatorPage.clickNumberButton(6);
     googleCalculatorPage.clickMinusButton();
-    googleCalculatorPage.clickNumberSevenButton();
-    googleCalculatorPage.clickNumberEightButton();
+    googleCalculatorPage.clickNumberButton(7);
+    googleCalculatorPage.clickNumberButton(8);
     googleCalculatorPage.clickEqualsButton();
-    googleCalculatorPage.verifyCalculatorResult('-22');
+    googleCalculatorPage.elements.calculatorResult().should('have.text', '-22');
   })
 
-  it('Test multiplication', () => {
+  it('Test multiplication of numbers', () => {
     const googleCalculatorPage = new GoogleCalculatorPage();
-    googleCalculatorPage.clickNumberNineButton();
-    googleCalculatorPage.clickNumberZeroButton();
+    googleCalculatorPage.clickNumberButton(9);
+    googleCalculatorPage.clickNumberButton(0);
     googleCalculatorPage.clickMultiplyButton();
-    googleCalculatorPage.clickNumberOneButton();
-    googleCalculatorPage.clickNumberTwoButton();
+    googleCalculatorPage.clickNumberButton(1);
+    googleCalculatorPage.clickNumberButton(2);
     googleCalculatorPage.clickEqualsButton();
-    googleCalculatorPage.verifyCalculatorResult('1080')
+    googleCalculatorPage.elements.calculatorResult().should('have.text', '1080');
 
   })
 
-  it('Test division', () => {
+  it('Test division of numbers', () => {
     const googleCalculatorPage = new GoogleCalculatorPage();
-    googleCalculatorPage.clickNumberThreeButton();
-    googleCalculatorPage.clickNumberSixButton();
+    googleCalculatorPage.clickNumberButton(3);
+    googleCalculatorPage.clickNumberButton(6);
     googleCalculatorPage.clickDivideButton();
-    googleCalculatorPage.clickNumberSixButton();
+    googleCalculatorPage.clickNumberButton(6);
     googleCalculatorPage.clickEqualsButton();
-    googleCalculatorPage.verifyCalculatorResult('6');
+    googleCalculatorPage.elements.calculatorResult().should('have.text', '6');
   })
 
-  it('Test all clear', () => {
+  it('Test all clear works correctly', () => {
     const googleCalculatorPage = new GoogleCalculatorPage();
     // All clear button is displayed by default, but clicking it won't change anything since the result defaults to 0
     googleCalculatorPage.elements.allClearButton().should('have.css', 'display', 'block');
-    googleCalculatorPage.clickNumberOneButton();
+    googleCalculatorPage.clickNumberButton(1);
     // All clear button should change to clear entry button after an input has been entered
     googleCalculatorPage.elements.allClearButton().should('have.css', 'display', 'none');
     googleCalculatorPage.clickPlusButton();
-    googleCalculatorPage.clickNumberOneButton();
+    googleCalculatorPage.clickNumberButton(1);
     googleCalculatorPage.clickEqualsButton();
-    googleCalculatorPage.verifyCalculatorResult('2');
+    googleCalculatorPage.elements.calculatorResult().should('have.text', '2');
     // All clear button should reappear after clicking 'equals' button
     googleCalculatorPage.elements.allClearButton().should('have.css', 'display', 'block');
     googleCalculatorPage.clickAllClearButton();
-    googleCalculatorPage.verifyCalculatorResult('0')
+    googleCalculatorPage.elements.calculatorResult().should('have.text', '0');
   })
 
-  it('Test clear entry', () => {
+  it('Test clear entry works correctly', () => {
     const googleCalculatorPage = new GoogleCalculatorPage();
     // All clear button is displayed by default
     googleCalculatorPage.elements.clearEntryButton().should('have.css', 'display', 'none');
-    googleCalculatorPage.clickNumberOneButton();
+    googleCalculatorPage.clickNumberButton(1);
     // All clear button should change to clear entry button after an input has been entered
     googleCalculatorPage.elements.clearEntryButton().should('have.css', 'display', 'block');
-    googleCalculatorPage.clickNumberOneButton();
+    googleCalculatorPage.clickNumberButton(1);
     googleCalculatorPage.clickPlusButton();
-    googleCalculatorPage.verifyCalculatorResult('11 + ');
+    googleCalculatorPage.elements.calculatorResult().should('have.text', '11 + ');
     googleCalculatorPage.clickClearEntryButton();
-    googleCalculatorPage.verifyCalculatorResult('11');
+    googleCalculatorPage.elements.calculatorResult().should('have.text', '11');
     googleCalculatorPage.clickClearEntryButton();
-    googleCalculatorPage.verifyCalculatorResult('1');
+    googleCalculatorPage.elements.calculatorResult().should('have.text', '1');
     googleCalculatorPage.clickPlusButton();
-    googleCalculatorPage.clickNumberOneButton();
+    googleCalculatorPage.clickNumberButton(1);
     googleCalculatorPage.clickEqualsButton();
-    googleCalculatorPage.verifyCalculatorResult('2');
+    googleCalculatorPage.elements.calculatorResult().should('have.text', '2');
     // Clear entry button should be replaced with all clear button after clicking 'equals' button
     googleCalculatorPage.elements.clearEntryButton().should('have.css', 'display', 'none');
   })
 
-  it('Test calculation with decimals', () => {
+  it('Test calculation with decimal numbers', () => {
     const googleCalculatorPage = new GoogleCalculatorPage();
-    googleCalculatorPage.clickNumberZeroButton();
+    googleCalculatorPage.clickNumberButton(0);
     googleCalculatorPage.clickPointButton();
-    googleCalculatorPage.clickNumberFiveButton();
+    googleCalculatorPage.clickNumberButton(5);
     googleCalculatorPage.clickMultiplyButton();
-    googleCalculatorPage.clickNumberZeroButton();
+    googleCalculatorPage.clickNumberButton(0);
     googleCalculatorPage.clickPointButton();
-    googleCalculatorPage.clickNumberFiveButton();
+    googleCalculatorPage.clickNumberButton(5);
     googleCalculatorPage.clickEqualsButton();
-    googleCalculatorPage.verifyCalculatorResult('0.25')
+    googleCalculatorPage.elements.calculatorResult().should('have.text', '0.25');
     googleCalculatorPage.clickMinusButton();
-    googleCalculatorPage.clickNumberOneButton();
+    googleCalculatorPage.clickNumberButton(1);
     googleCalculatorPage.clickPointButton();
-    googleCalculatorPage.clickNumberThreeButton();
+    googleCalculatorPage.clickNumberButton(3);
     googleCalculatorPage.clickEqualsButton();
-    googleCalculatorPage.verifyCalculatorResult('-1.05')
+    googleCalculatorPage.elements.calculatorResult().should('have.text', '-1.05');
   })
 
   it('Test divide by 0', () => {
     const googleCalculatorPage = new GoogleCalculatorPage();
-    googleCalculatorPage.clickNumberSevenButton();
+    googleCalculatorPage.clickNumberButton(7);
     googleCalculatorPage.clickDivideButton();
-    googleCalculatorPage.clickNumberZeroButton();
+    googleCalculatorPage.clickNumberButton(0);
     googleCalculatorPage.clickEqualsButton();
-    googleCalculatorPage.verifyCalculatorResult('Infinity');
+    googleCalculatorPage.elements.calculatorResult().should('have.text', 'Infinity');
   })
 
-  it('Test is calculator follows BEDMAS', () => {
+  it('Test calculator follows BEDMAS', () => {
     const googleCalculatorPage = new GoogleCalculatorPage();
-    googleCalculatorPage.clickNumberOneButton();
+    googleCalculatorPage.clickNumberButton(1);
     googleCalculatorPage.clickPlusButton();
-    googleCalculatorPage.clickNumberTwoButton();
+    googleCalculatorPage.clickNumberButton(2);
     googleCalculatorPage.clickMinusButton();
-    googleCalculatorPage.clickNumberThreeButton();
+    googleCalculatorPage.clickNumberButton(3);
     googleCalculatorPage.clickMultiplyButton();
-    googleCalculatorPage.clickNumberFourButton();
+    googleCalculatorPage.clickNumberButton(4);
     googleCalculatorPage.clickDivideButton();
-    googleCalculatorPage.clickNumberThreeButton();
+    googleCalculatorPage.clickNumberButton(3);
     googleCalculatorPage.clickEqualsButton();
-    googleCalculatorPage.verifyCalculatorResult('-1');
+    googleCalculatorPage.elements.calculatorResult().should('have.text', '-1');
   })
 
 
